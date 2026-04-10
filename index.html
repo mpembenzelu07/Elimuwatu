@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Nexus | Visionary School-Parent Ecosystem</title>
+    <!-- Tailwind + Font Awesome + Chart.js + Google Fonts -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * { font-family: 'Inter', sans-serif; }
+        body { background: #f0f4fa; }
+        /* custom scroll & glass morphism */
+        .glass-panel { background: rgba(255,255,255,0.85); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.4); }
+        .card-elevated { transition: all 0.25s cubic-bezier(0.2, 0, 0, 1); }
+        .card-elevated:hover { transform: translateY(-6px); box-shadow: 0 25px 35px -12px rgba(0,0,0,0.2); }
+        .gradient-border { background: linear-gradient(135deg, #6366f1, #8b5cf6, #ec4899); padding: 2px; border-radius: 1.5rem; }
+        .inner-card { background: white; border-radius: 1.4rem; }
+        ::-webkit-scrollbar { width: 5px; }
+        ::-webkit-scrollbar-track { background: #eef2ff; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb { background: #a5b4fc; border-radius: 10px; }
+        .animate-float { animation: float 3s ease-in-out infinite; }
+        @keyframes float { 0% { transform: translateY(0px); } 50% { transform: translateY(-6px); } 100% { transform: translateY(0px); } }
+        .zoom-badge { background: linear-gradient(135deg, #0284c7, #38bdf8); }
+        .stat-card { border-radius: 2rem; }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- LOGIN SECTION - VISIONARY -->
+    <div id="loginContainer" class="min-h-screen flex items-center justify-center px-4 bg-gradient-to-br from-indigo-900 via-slate-800 to-blue-900 relative overflow-hidden">
+        <div class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="none" fill-rule="evenodd"%3E%3Cg fill="%239C92AC" fill-opacity="0.08"%3E%3Cpath d="M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')]; opacity: 0.3;"></div>
+        <div class="max-w-md w-full relative z-10 glass-panel rounded-3xl shadow-2xl p-8 border border-white/30">
+            <div class="text-center mb-6">
+                <div class="w-20 h-20 bg-gradient-to-tr from-indigo-500 to-purple-600 rounded-2xl flex items-center justify-center mx-auto shadow-xl animate-float">
+                    <i class="fas fa-hands-helping text-white text-4xl"></i>
+                </div>
+                <h2 class="mt-5 text-4xl font-black text-white drop-shadow-md">Nexus<span class="text-indigo-200">|School</span></h2>
+                <p class="text-indigo-100 mt-1">where education meets connection</p>
+            </div>
+            <form id="loginForm">
+                <div class="mb-4">
+                    <label class="block text-white/80 font-medium mb-1"><i class="fas fa-envelope mr-2"></i>Email</label>
+                    <input type="email" id="loginEmail" class="w-full px-4 py-3 bg-white/20 border border-white/30 rounded-xl text-white placeholder-white/60 focus:ring-2 focus:ring-indigo-300 outline-none" placeholder="parent@nexus.edu" value="parent@demo.com">
+                </div>
+                <div class="mb-6">
+                    <label class="block text-white/80 font-medium mb-1"><i class="fas fa-lock mr-2"></i>Password</label>
+                    <input type="password" id="loginPassword" class="w-full px-4 py-3 bg-white/20 border border-white/30 rounded-xl text-white placeholder-white/60 focus:ring-2 focus:ring-indigo-300 outline-none" placeholder="••••••" value="demo">
+                </div>
+                <button type="submit" class="w-full bg-white text-indigo-800 font-extrabold py-3 rounded-xl transition transform hover:scale-[1.02] shadow-lg"><i class="fas fa-arrow-right-to-bracket mr-2"></i>Enter Vision Portal</button>
+            </form>
+            <p class="text-xs text-center text-indigo-200 mt-6">demo: parent@demo.com / any password</p>
+        </div>
+    </div>
+
+    <!-- MAIN APP - NEXT-GEN DASHBOARD -->
+    <div id="appContainer" class="hidden bg-gradient-to-br from-slate-50 to-indigo-50/30 min-h-screen">
+        <!-- Sticky Glass Header -->
+        <header class="sticky top-0 z-30 glass-panel shadow-sm border-b border-white/40">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex flex-wrap justify-between items-center gap-3">
+                <div class="flex items-center gap-2">
+                    <div class="bg-gradient-to-r from-indigo-600 to-purple-600 w-9 h-9 rounded-xl flex items-center justify-center shadow-md"><i class="fas fa-chalkboard-user text-white text-lg"></i></div>
+                    <span class="font-black text-2xl tracking-tight text-gray-800">Nexus<span class="text-indigo-600">|School</span></span>
+                    <span class="hidden md:inline-flex text-xs bg-emerald-100 text-emerald-700 px-2 py-0.5 rounded-full ml-2">live sync</span>
+                </div>
+                <div class="flex items-center gap-4">
+                    <div class="hidden md:flex items-center gap-2 bg-white/50 backdrop-blur-sm px-3 py-1.5 rounded-full"><i class="fas fa-user-graduate text-indigo-500"></i><span id="parentNameDisplay" class="text-sm font-medium">Alex Parent</span></div>
+                    <button id="logoutBtn" class="bg-white/70 hover:bg-white text-gray-700 px-4 py-2 rounded-xl text-sm font-semibold transition flex items-center gap-2 shadow-sm"><i class="fas fa-sign-out-alt"></i> Exit</button>
+                </div>
+            </div>
+        </header>
+
+        <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <!-- Hero + Child Switcher -->
+            <div class="flex flex-wrap justify-between items-center mb-8 gap-5">
+                <div class="bg-gradient-to-r from-indigo-500/10 to-purple-500/10 p-5 rounded-3xl flex-1">
+                    <h2 class="text-3xl font-black text-gray-800">🌟 Welcome, <span id="parentFirstName">Michael</span>!</h2>
+                    <p class="text-gray-600 mt-1">Your unified command center for academic excellence & real-time engagement.</p>
+                </div>
+                <div class="bg-white rounded-2xl shadow-md px-5 py-3 flex items-center gap-3 border border-indigo-100">
+                    <i class="fas fa-child text-indigo-500 text-xl"></i>
+                    <select id="childSelector" class="border-0 bg-transparent font-bold text-gray-800 text-lg focus:ring-0 cursor-pointer"></select>
+                </div>
+            </div>
+
+            <!-- Premium KPI Cards -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
+                <div class="gradient-border"><div class="inner-card p-5 flex justify-between items-center"><div><p class="text-gray-500 text-sm">📚 Academic Avg</p><p class="text-3xl font-black" id="avgGradeKpi">94.2</p><span class="text-xs text-green-600">▲ +3% vs last term</span></div><i class="fas fa-chart-line text-4xl text-indigo-300"></i></div></div>
+                <div class="gradient-border"><div class="inner-card p-5 flex justify-between"><div><p class="text-gray-500 text-sm">💰 Outstanding Fees</p><p class="text-3xl font-black" id="outstandingKpi">$0</p><span class="text-xs text-gray-400">up to date</span></div><i class="fas fa-coins text-4xl text-amber-300"></i></div></div>
+                <div class="gradient-border"><div class="inner-card p-5 flex justify-between"><div><p class="text-gray-500 text-sm">🎥 Upcoming Zooms</p><p class="text-3xl font-black" id="meetingCountKpi">2</p><span class="text-xs text-blue-600">ready to connect</span></div><i class="fas fa-video text-4xl text-sky-300"></i></div></div>
+                <div class="gradient-border"><div class="inner-card p-5 flex justify-between"><div><p class="text-gray-500 text-sm">📬 Parent Alerts</p><p class="text-3xl font-black" id="notifCountKpi">0</p><span class="text-xs text-purple-600">activity log</span></div><i class="fas fa-bell text-4xl text-purple-300"></i></div></div>
+            </div>
+
+            <!-- Two Column Core Experience -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- Left Column: Analytics & Finance & Communication -->
+                <div class="lg:col-span-2 space-y-8">
+                    <!-- Academic Intelligence with Chart -->
+                    <div class="bg-white rounded-3xl shadow-xl overflow-hidden border border-gray-100">
+                        <div class="bg-gradient-to-r from-indigo-50 to-transparent px-6 py-4 border-b flex justify-between items-center"><div><i class="fas fa-chart-scatter text-indigo-600 mr-2"></i><span class="font-bold text-xl">📈 Cognitive Performance</span></div><div class="text-xs bg-indigo-100 text-indigo-700 px-3 py-1 rounded-full">Term 1 vs Term 2</div></div>
+                        <div class="p-6"><canvas id="academicChart" height="220" class="w-full"></canvas><div id="academicRemarks" class="mt-5 p-4 bg-indigo-50/50 rounded-2xl text-sm text-gray-700 italic border-l-4 border-indigo-400"></div></div>
+                    </div>
+
+                    <!-- Smart Fee Center -->
+                    <div class="bg-white rounded-3xl shadow-xl overflow-hidden">
+                        <div class="bg-gray-50/80 px-6 py-4 border-b flex items-center gap-2"><i class="fas fa-wallet text-emerald-600 text-xl"></i><h3 class="font-bold text-xl">💰 Financial Nexus</h3><span class="ml-auto text-xs bg-emerald-100 px-2 py-0.5 rounded-full">secured payment</span></div>
+                        <div class="p-6" id="feeContainer"></div>
+                    </div>
+
+                    <!-- Two-way Notify School (Genius) -->
+                    <div class="bg-white rounded-3xl shadow-xl overflow-hidden">
+                        <div class="bg-gray-50/80 px-6 py-4 border-b flex items-center gap-2"><i class="fas fa-paper-plane text-amber-600 text-xl"></i><h3 class="font-bold text-xl">📢 SmartNotify™</h3><span class="text-xs text-amber-600">real-time to teacher</span></div>
+                        <div class="p-6" id="notifySchoolContainer"></div>
+                    </div>
+                </div>
+
+                <!-- Right Column: Zoom Hub + News + Timeline -->
+                <div class="space-y-8">
+                    <!-- Zoom Meetings Orchestrator -->
+                    <div class="bg-white rounded-3xl shadow-xl overflow-hidden">
+                        <div class="bg-gray-50/80 px-6 py-4 border-b flex justify-between items-center"><div><i class="fab fa-zoom text-sky-600 text-xl mr-2"></i><span class="font-bold text-xl">🎥 Zoom Bridge</span></div><button id="openScheduleModalBtn" class="bg-gradient-to-r from-sky-500 to-indigo-500 hover:scale-105 text-white px-4 py-1.5 rounded-full text-sm font-semibold transition shadow"><i class="fas fa-calendar-plus mr-1"></i>Schedule</button></div>
+                        <div class="p-4 max-h-80 overflow-y-auto space-y-3" id="zoomMeetingsList"></div>
+                    </div>
+
+                    <!-- School News (Dynamic) -->
+                    <div class="bg-white rounded-3xl shadow-xl overflow-hidden">
+                        <div class="bg-gray-50/80 px-6 py-4 border-b"><i class="fas fa-newspaper text-indigo-500 mr-2"></i><span class="font-bold text-xl">📰 Visionary News</span></div>
+                        <div class="p-4 space-y-3 max-h-64 overflow-y-auto" id="newsFeed"></div>
+                    </div>
+
+                    <!-- Parent Action Log -->
+                    <div class="bg-white rounded-3xl shadow-xl overflow-hidden">
+                        <div class="bg-gray-50/80 px-6 py-4 border-b"><i class="fas fa-history text-gray-500 mr-2"></i><span class="font-bold text-xl">📜 Interaction Log</span></div>
+                        <div class="p-3 max-h-52 overflow-y-auto space-y-2" id="notificationHistoryList"></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Modal: Schedule Zoom Meeting (Pro) -->
+        <div id="scheduleModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 hidden transition-all">
+            <div class="bg-white rounded-3xl max-w-md w-full mx-4 p-6 shadow-2xl transform transition-all scale-95">
+                <div class="flex justify-between items-center mb-5"><h3 class="text-2xl font-black bg-gradient-to-r from-sky-600 to-indigo-600 bg-clip-text text-transparent">🎥 Schedule Zoom Session</h3><button id="closeModalBtn" class="text-gray-400 hover:text-gray-700"><i class="fas fa-times-circle text-2xl"></i></button></div>
+                <form id="scheduleMeetingForm">
+                    <div class="mb-4"><label class="block font-semibold mb-1">Select Child</label><select id="meetingChildSelect" class="w-full border rounded-xl p-2.5 bg-gray-50"></select></div>
+                    <div class="mb-4"><label class="block font-semibold mb-1">Teacher Name</label><input type="text" id="teacherName" class="w-full border rounded-xl p-2.5" placeholder="e.g., Prof. Williams" required></div>
+                    <div class="mb-4"><label class="block font-semibold mb-1">Date & Time</label><input type="datetime-local" id="meetingDateTime" class="w-full border rounded-xl p-2.5" required></div>
+                    <div class="mb-5"><label class="block font-semibold mb-1">Discussion Topic</label><input type="text" id="meetingTopic" class="w-full border rounded-xl p-2.5" placeholder="Progress / Behavior / Career"></div>
+                    <button type="submit" class="w-full bg-gradient-to-r from-sky-600 to-indigo-600 hover:shadow-lg text-white font-bold py-3 rounded-xl transition"><i class="fab fa-zoom mr-2"></i>Generate Zoom Link & Notify</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ============================ VISIONARY DATA MODEL with LOCAL PERSISTENCE =================================
+        const MASTER_DATA = {
+            parent: { id: 1, name: "Elena Martinez", email: "parent@demo.com" },
+            children: [
+                { id: 301, name: "Lucas Martinez", grade: "Grade 5 - Einstein", classTeacher: "Dr. Sophia Chen", avatar: "L" },
+                { id: 302, name: "Mia Martinez", grade: "Grade 2 - Curie", classTeacher: "Ms. Olivia Park", avatar: "M" }
+            ],
+            academic: {
+                301: { term1: { Math: 96, English: 88, Science: 99, History: 91, Art: 94 }, term2: { Math: 98, English: 92, Science: 100, History: 94, Art: 96 }, remarks: "Lucas demonstrates exceptional analytical skills; top 3% in science." },
+                302: { term1: { Math: 82, English: 87, Science: 79, History: 84, Art: 98 }, term2: { Math: 89, English: 90, Science: 86, History: 88, Art: 99 }, remarks: "Mia’s creativity shines; significant growth in logical reasoning." }
+            },
+            fees: {
+                301: { due: 0, total: 5600, paid: 5600, transactions: [{ date: "2025-01-10", amount: 2000 }, { date: "2025-02-15", amount: 2000 }, { date: "2025-03-01", amount: 1600 }] },
+                302: { due: 280, total: 4800, paid: 4520, transactions: [{ date: "2025-01-12", amount: 1500 }, { date: "2025-02-18", amount: 1500 }, { date: "2025-03-05", amount: 1520 }] }
+            },
+            meetings: [],
+            news: [
+                { id: 1, title: "🏅 Robotics Nationals Qualifiers", date: "Apr 4, 2025", content: "Lucas's team advanced to state championship! Celebration on Friday." },
+                { id: 2, title: "🎭 Spring Arts Gala", date: "Mar 30, 2025", content: "Mia’s painting featured in the Young Artists Exhibit – April 18." },
+                { id: 3, title: "📢 Parent-Teacher Zoom Marathon", date: "Apr 1, 2025", content: "April 20-24: book 20-min slots with teachers via portal." }
+            ],
+            notificationHistory: []
+        };
+
+        // Load persisted data
+        function loadPersisted() {
+            const storedMeets = localStorage.getItem("nexus_zoom_meetings");
+            if(storedMeets) MASTER_DATA.meetings = JSON.parse(storedMeets);
+            else MASTER_DATA.meetings = [
+                { id: "zoom1", childId: 301, teacher: "Dr. Sophia Chen", datetime: "2025-04-15T16:00", zoomLink: "https://zoom.us/j/87123456789", topic: "Math Olympiad prep" },
+                { id: "zoom2", childId: 302, teacher: "Ms. Olivia Park", datetime: "2025-04-17T10:30", zoomLink: "https://zoom.us/j/91234567890", topic: "Literacy & expression" }
+            ];
+            const storedLogs = localStorage.getItem("nexus_parent_logs");
+            if(storedLogs) MASTER_DATA.notificationHistory = JSON.parse(storedLogs);
+        }
+        function persistMeetings() { localStorage.setItem("nexus_zoom_meetings", JSON.stringify(MASTER_DATA.meetings)); }
+        function persistLogs() { localStorage.setItem("nexus_parent_logs", JSON.stringify(MASTER_DATA.notificationHistory)); }
+        loadPersisted();
+
+        // Global state
+        let activeChildId = 301;
+        let academicChart = null;
+        let loggedInFlag = false;
+
+        // helpers
+        function getChild(id) { return MASTER_DATA.children.find(c => c.id === id); }
+
+        function updateKPIs() {
+            const child = getChild(activeChildId);
+            const acad = MASTER_DATA.academic[activeChildId];
+            if(acad) {
+                let avg = Object.values(acad.term2).reduce((a,b)=>a+b,0)/Object.values(acad.term2).length;
+                document.getElementById("avgGradeKpi").innerHTML = avg.toFixed(1);
+            }
+            const fee = MASTER_DATA.fees[activeChildId];
+            document.getElementById("outstandingKpi").innerHTML = `$${fee.due}`;
+            const meetCount = MASTER_DATA.meetings.filter(m => m.childId === activeChildId).length;
+            document.getElementById("meetingCountKpi").innerHTML = meetCount;
+            const notifCount = MASTER_DATA.notificationHistory.filter(n => n.childId === activeChildId).length;
+            document.getElementById("notifCountKpi").innerHTML = notifCount;
+        }
+
+        function renderAcademicInsight() {
+            const acad = MASTER_DATA.academic[activeChildId];
+            if(!acad) return;
+            const subjects = Object.keys(acad.term1);
+            const term1Data = subjects.map(s => acad.term1[s]);
+            const term2Data = subjects.map(s => acad.term2[s]);
+            const ctx = document.getElementById('academicChart').getContext('2d');
+            if(academicChart) academicChart.destroy();
+            academicChart = new Chart(ctx, {
+                type: 'line',
+                data: { labels: subjects, datasets: [{ label: 'Term 1', data: term1Data, borderColor: '#818cf8', backgroundColor: 'rgba(99,102,241,0.1)', tension: 0.3, fill: true }, { label: 'Term 2 (Current)', data: term2Data, borderColor: '#10b981', backgroundColor: 'rgba(16,185,129,0.05)', tension: 0.3, fill: true }] },
+                options: { responsive: true, maintainAspectRatio: true, plugins: { tooltip: { callbacks: { label: (ctx) => `${ctx.dataset.label}: ${ctx.raw}%` } } } }
+            });
+            document.getElementById("academicRemarks").innerHTML = `<i class="fas fa-microphone-alt text-indigo-500 mr-2"></i>✨ Teacher's insight: ${acad.remarks}`;
+        }
+
+        function renderFeeCenter() {
+            const fee = MASTER_DATA.fees[activeChildId];
+            const child = getChild(activeChildId);
+            const percent = ((fee.total - fee.due) / fee.total) * 100;
+            const container = document.getElementById("feeContainer");
+            container.innerHTML = `
+                <div class="space-y-4">
+                    <div class="flex justify-between"><span class="font-semibold">Total Annual Fee</span><span class="font-bold text-lg">$${fee.total}</span></div>
+                    <div class="flex justify-between"><span>✅ Paid</span><span class="text-emerald-600 font-bold">$${fee.paid}</span></div>
+                    <div class="flex justify-between"><span>⚠️ Balance Due</span><span class="text-red-500 font-bold">$${fee.due}</span></div>
+                    <div class="w-full bg-gray-200 rounded-full h-3"><div class="bg-emerald-500 h-3 rounded-full" style="width: ${percent}%"></div></div>
+                    ${fee.due > 0 ? `<button id="instantPayBtn" class="w-full bg-gradient-to-r from-emerald-500 to-teal-500 text-white py-2.5 rounded-xl font-bold mt-2 shadow-md transition hover:scale-[1.01]"><i class="fas fa-credit-card mr-2"></i> Secure Pay $${fee.due}</button>` : `<div class="bg-emerald-50 text-emerald-700 p-3 rounded-xl text-center font-semibold"><i class="fas fa-check-circle"></i> Fully cleared — receipt archived</div>`}
+                    <div class="text-xs text-gray-500 pt-2 border-t">📜 Recent: ${fee.transactions.map(t => `$${t.amount} (${t.date})`).join(' • ')}</div>
+                </div>
+            `;
+            const payBtn = document.getElementById("instantPayBtn");
+            if(payBtn) payBtn.onclick = () => {
+                const dueAmt = MASTER_DATA.fees[activeChildId].due;
+                if(dueAmt <= 0) return;
+                MASTER_DATA.fees[activeChildId].paid += dueAmt;
+                MASTER_DATA.fees[activeChildId].due = 0;
+                MASTER_DATA.fees[activeChildId].transactions.push({ date: new Date().toISOString().slice(0,10), amount: dueAmt });
+                renderFeeCenter();
+                addParentAction("💰 Fee Settlement", `Paid $${dueAmt} for ${child.name}. Transaction complete.`);
+                updateKPIs();
+            };
+        }
+
+        function addParentAction(title, message) {
+            const child = getChild(activeChildId);
+            const logEntry = { id: Date.now(), childId: activeChildId, childName: child.name, title, message, timestamp: new Date().toLocaleString() };
+            MASTER_DATA.notificationHistory.unshift(logEntry);
+            persistLogs();
+            renderNotificationLog();
+            updateKPIs();
+        }
+
+        function renderNotificationLog() {
+            const container = document.getElementById("notificationHistoryList");
+            const filtered = MASTER_DATA.notificationHistory.filter(l => l.childId === activeChildId);
+            if(filtered.length === 0) { container.innerHTML = "<div class='text-center text-gray-400 p-3'>✨ No interactions yet. Notify school or schedule a meeting.</div>"; return; }
+            container.innerHTML = filtered.map(l => `<div class="bg-gray-50 p-2 rounded-xl border-l-4 border-indigo-300"><p class="text-[11px] text-gray-400">${l.timestamp}</p><p class="font-bold text-sm">${l.title}</p><p class="text-xs text-gray-600">${l.message}</p></div>`).join('');
+        }
+
+        function renderNotifyInterface() {
+            const child = getChild(activeChildId);
+            const container = document.getElementById("notifySchoolContainer");
+            container.innerHTML = `
+                <div class="space-y-5">
+                    <div class="bg-amber-50/60 rounded-2xl p-4"><label class="font-bold block mb-2"><i class="fas fa-calendar-day"></i> 📍 Daily Attendance Pulse</label><div class="flex gap-2 flex-wrap mb-2"><button data-att="present" class="attOpt bg-white px-4 py-1.5 rounded-full shadow-sm">✅ Present</button><button data-att="absent" class="attOpt bg-white px-4 py-1.5 rounded-full shadow-sm">❌ Absent</button><button data-att="late" class="attOpt bg-white px-4 py-1.5 rounded-full shadow-sm">⏰ Late Arrival</button></div><textarea id="attendNoteArea" rows="2" class="w-full border rounded-xl p-2 text-sm" placeholder="Optional reason / message to teacher"></textarea><button id="sendAttendAlert" class="mt-2 w-full bg-indigo-600/80 text-white py-2 rounded-xl font-medium">📨 Send Update</button></div>
+                    <div class="bg-blue-50/40 rounded-2xl p-4"><label class="font-bold block mb-2"><i class="fas fa-chart-line"></i> 🧠 Academic / Progress Note</label><textarea id="progressNoteArea" rows="3" class="w-full border rounded-xl p-2 text-sm" placeholder="Share milestones, concerns, or achievements..."></textarea><button id="sendProgressAlert" class="mt-2 w-full bg-sky-600 text-white py-2 rounded-xl font-medium">✉️ Notify Teacher & School</button></div>
+                </div>
+            `;
+            let selectedAtt = null;
+            document.querySelectorAll('.attOpt').forEach(btn => {
+                btn.onclick = () => { document.querySelectorAll('.attOpt').forEach(b=>b.classList.remove('ring-2','ring-indigo-400')); btn.classList.add('ring-2','ring-indigo-400'); selectedAtt = btn.getAttribute('data-att'); };
+            });
+            document.getElementById("sendAttendAlert").onclick = () => {
+                if(!selectedAtt) { alert("Select attendance status"); return; }
+                const note = document.getElementById("attendNoteArea").value;
+                let statusMsg = selectedAtt === 'present' ? 'will be present' : (selectedAtt === 'absent' ? 'will be absent' : 'will arrive late');
+                addParentAction("📋 Attendance Alert", `${child.name} ${statusMsg}. ${note ? `Note: ${note}` : 'No extra note.'}`);
+                alert(`✅ School notified: ${child.name} ${statusMsg}`);
+                document.getElementById("attendNoteArea").value = ''; selectedAtt=null;
+                document.querySelectorAll('.attOpt').forEach(b=>b.classList.remove('ring-2','ring-indigo-400'));
+            };
+            document.getElementById("sendProgressAlert").onclick = () => {
+                const prog = document.getElementById("progressNoteArea").value.trim();
+                if(!prog) { alert("Please write a progress note"); return; }
+                addParentAction("📚 Progress Report", `Regarding ${child.name}: ${prog}`);
+                alert(`Progress insight sent to ${child.classTeacher}`);
+                document.getElementById("progressNoteArea").value = '';
+            };
+        }
+
+        function renderZoomMeetings() {
+            const container = document.getElementById("zoomMeetingsList");
+            const childMeetings = MASTER_DATA.meetings.filter(m => m.childId === activeChildId);
+            if(childMeetings.length === 0) { container.innerHTML = "<div class='text-gray-400 text-center p-4'>No upcoming Zooms. Schedule a conversation now.</div>"; return; }
+            container.innerHTML = childMeetings.map(m => `
+                <div class="border rounded-2xl p-3 flex justify-between items-center bg-white shadow-sm">
+                    <div><p class="font-black">👩‍🏫 ${m.teacher}</p><p class="text-xs text-gray-500">📅 ${new Date(m.datetime).toLocaleString()}</p><p class="text-sm">🎯 ${m.topic}</p></div>
+                    <a href="${m.zoomLink}" target="_blank" class="bg-sky-100 text-sky-700 px-3 py-2 rounded-full text-xs font-bold flex items-center gap-1"><i class="fab fa-zoom"></i> Join</a>
+                </div>
+            `).join('');
+        }
+
+        function renderNews() {
+            const container = document.getElementById("newsFeed");
+            container.innerHTML = MASTER_DATA.news.map(n => `<div class="border-b pb-2 last:border-0"><p class="font-bold">${n.title}</p><p class="text-[10px] text-gray-400">${n.date}</p><p class="text-sm text-gray-700">${n.content}</p></div>`).join('');
+        }
+
+        function fullRefresh() {
+            renderAcademicInsight();
+            renderFeeCenter();
+            renderNotifyInterface();
+            renderZoomMeetings();
+            renderNews();
+            renderNotificationLog();
+            updateKPIs();
+        }
+
+        function onChildSwitch() { activeChildId = parseInt(document.getElementById("childSelector").value); fullRefresh(); }
+
+        // Modal scheduling logic
+        function initModal() {
+            const modal = document.getElementById("scheduleModal");
+            const openBtn = document.getElementById("openScheduleModalBtn");
+            const closeBtn = document.getElementById("closeModalBtn");
+            const childSelect = document.getElementById("meetingChildSelect");
+            openBtn.onclick = () => {
+                childSelect.innerHTML = MASTER_DATA.children.map(c => `<option value="${c.id}">${c.name} (${c.grade})</option>`).join('');
+                modal.classList.remove("hidden");
+            };
+            closeBtn.onclick = () => modal.classList.add("hidden");
+            document.getElementById("scheduleMeetingForm").onsubmit = (e) => {
+                e.preventDefault();
+                const childId = parseInt(childSelect.value);
+                const teacher = document.getElementById("teacherName").value.trim();
+                const datetime = document.getElementById("meetingDateTime").value;
+                const topic = document.getElementById("meetingTopic").value.trim() || "Parent Conference";
+                if(!teacher || !datetime) { alert("All fields required"); return; }
+                const newMeet = { id: "z"+Date.now(), childId, teacher, datetime, zoomLink: `https://zoom.us/j/${Math.floor(100000000000+Math.random()*900000000000)}`, topic };
+                MASTER_DATA.meetings.push(newMeet);
+                persistMeetings();
+                const childObj = getChild(childId);
+                addParentAction("🎥 Zoom Scheduled", `Meeting with ${teacher} on ${new Date(datetime).toLocaleString()}. Link: ${newMeet.zoomLink}`);
+                fullRefresh();
+                modal.classList.add("hidden");
+                document.getElementById("scheduleMeetingForm").reset();
+                alert("✅ Zoom meeting created & added to dashboard.");
+            };
+        }
+
+        // Login & Initialization
+        function initAuth() {
+            document.getElementById("loginForm").addEventListener("submit", (e) => {
+                e.preventDefault();
+                const email = document.getElementById("loginEmail").value;
+                if(email === "parent@demo.com") {
+                    loggedInFlag = true;
+                    document.getElementById("loginContainer").classList.add("hidden");
+                    document.getElementById("appContainer").classList.remove("hidden");
+                    document.getElementById("parentNameDisplay").innerText = MASTER_DATA.parent.name;
+                    document.getElementById("parentFirstName").innerText = MASTER_DATA.parent.name.split(" ")[0];
+                    const selector = document.getElementById("childSelector");
+                    selector.innerHTML = MASTER_DATA.children.map(c => `<option value="${c.id}">${c.name} (${c.grade})</option>`).join('');
+                    activeChildId = MASTER_DATA.children[0].id;
+                    selector.value = activeChildId;
+                    selector.addEventListener("change", onChildSwitch);
+                    fullRefresh();
+                    initModal();
+                } else alert("Demo access: parent@demo.com (any password)");
+            });
+            document.getElementById("logoutBtn").addEventListener("click", () => {
+                loggedInFlag = false;
+                document.getElementById("loginContainer").classList.remove("hidden");
+                document.getElementById("appContainer").classList.add("hidden");
+            });
+        }
+        initAuth();
+    </script>
+</body>
+</html>
